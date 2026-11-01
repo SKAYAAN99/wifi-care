@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>WiFiCare — Independent Wi-Fi & Router Support | Chhatrapati Sambhajinagar</title>
+<meta name="description" content="Independent Wi-Fi and router troubleshooting in Chhatrapati Sambhajinagar. WhatsApp enquiries for router setup, slow Wi-Fi, and connection problems.">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080F;--bg2:#0B0D1A;--card:#0F1124;--lift:#141729;
+  --br:#1A1F3D;--br2:#252B55;
+  --blue:#4D88FF;--indigo:#7B6EF0;--amber:#F5A623;--green:#25D366;
+  --t1:#EEF0FF;--t2:#8B95C0;--t3:#7F8AB8;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--br2);border-radius:3px}
+
+/* HERO */
+.hero-bg{background:radial-gradient(ellipse 100% 70% at 50% 0%,rgba(77,136,255,.1) 0%,transparent 60%),var(--bg);position:relative;overflow:hidden}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.45}
+
+/* NAV */
+.hdr{background:rgba(7,8,15,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--br)}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(77,136,255,.08);border:1px solid rgba(77,136,255,.22);border-radius:99px;padding:5px 13px;font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.04em}
+.badge-dot{width:6px;height:6px;background:var(--blue);border-radius:50%;animation:bdot 2s ease-in-out infinite}
+@keyframes bdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.65)}}
+
+/* HEADLINE UNDERLINE */
+.hl{position:relative;display:inline}
+.hl::after{content:"";position:absolute;left:0;bottom:-3px;width:100%;height:4px;background:linear-gradient(90deg,var(--amber),var(--indigo));border-radius:2px;transform:scaleX(0);transform-origin:left;animation:hlin .8s .45s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes hlin{to{transform:scaleX(1)}}
+
+/* SIGNAL BARS */
+.sbars{display:flex;align-items:flex-end;gap:4px;height:34px}
+.sbars span{display:block;width:7px;border-radius:3px 3px 1px 1px;background:var(--blue);transform-origin:bottom;animation:srise 1.6s ease-in-out infinite alternate}
+.sbars span:nth-child(1){height:9px;animation-delay:-.2s}.sbars span:nth-child(2){height:16px;animation-delay:-.5s}
+.sbars span:nth-child(3){height:24px;animation-delay:-.8s}.sbars span:nth-child(4){height:33px;animation-delay:-1.1s}
+@keyframes srise{from{transform:scaleY(.4);opacity:.35}to{transform:scaleY(1);opacity:1}}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--br);border-radius:18px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.card:hover{border-color:rgba(77,136,255,.3);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.card-featured{background:linear-gradient(148deg,#101428,#131831);border:2px solid var(--blue);border-radius:20px;box-shadow:0 0 48px rgba(77,136,255,.07)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-weight:700;border-radius:12px;padding:12px 22px;font-size:14px;cursor:pointer;border:none;transition:all .18s;text-decoration:none;line-height:1}
+.btn-amber{background:var(--amber);color:#07080F}.btn-amber:hover{background:#e8991a;transform:translateY(-1px);box-shadow:0 6px 20px rgba(245,166,35,.32)}
+.btn-green{background:var(--green);color:#07080F}.btn-green:hover{background:#1aad4f;transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,211,102,.28)}
+.btn-ghost{background:transparent;color:var(--t1);border:1px solid var(--br2)}.btn-ghost:hover{background:var(--lift)}
+.btn-blue{background:var(--blue);color:#07080F}.btn-blue:hover{background:#3a72f0;transform:translateY(-1px);box-shadow:0 6px 20px rgba(77,136,255,.28)}
+.btn-dark{background:var(--lift);color:var(--t1);border:1px solid var(--br2)}.btn-dark:hover{background:var(--card);border-color:rgba(77,136,255,.3)}
+.btn-xl{padding:15px 28px;font-size:15px;border-radius:14px}
+
+/* INPUTS */
+.field{width:100%;background:var(--lift);border:1px solid var(--br2);border-radius:12px;padding:11px 14px;font-size:14px;color:var(--t1);transition:border-color .2s,box-shadow .2s;outline:none;font-family:inherit;appearance:none;-webkit-appearance:none}
+.field:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(77,136,255,.12)}
+.field::placeholder{color:var(--t3)}
+textarea.field{resize:vertical;min-height:90px}
+.field option{background:var(--card);color:var(--t1)}
+
+/* SCOPE */
+.scope-do{background:var(--card);border:1px solid rgba(37,211,102,.2);border-radius:20px;padding:28px}
+.scope-dont{background:var(--card);border:1px solid var(--br);border-radius:20px;padding:28px}
+
+/* PROMISE */
+.promise{background:var(--card);border:1px solid var(--br);border-radius:14px;padding:18px;transition:border-color .2s,transform .2s}
+.promise:hover{border-color:rgba(77,136,255,.28);transform:translateY(-2px)}
+
+/* FAQ */
+.faq-item{background:var(--card);border:1px solid var(--br);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color .2s}
+.faq-item:hover{border-color:rgba(77,136,255,.25)}
+.faq-btn{width:100%;padding:18px 20px;text-align:left;font-weight:600;font-size:14px;color:var(--t1);display:flex;align-items:center;justify-content:space-between;background:none;border:none;cursor:pointer;font-family:inherit;gap:12px}
+.faq-icon{transition:transform .3s ease;color:var(--t3);flex-shrink:0;width:18px;height:18px}
+.faq-icon.open{transform:rotate(180deg)}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.4,0,.2,1)}
+.faq-inner{padding:0 20px 18px;font-size:13px;color:var(--t2);line-height:1.75;border-top:1px solid var(--br);padding-top:14px}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .55s ease,transform .55s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+
+/* CONTACT */
+.contact-glow{background:linear-gradient(135deg,rgba(77,136,255,.05),rgba(123,110,240,.03));border:1px solid rgba(77,136,255,.18);border-radius:24px;padding:48px;text-align:center}
+
+/* FAB */
+.fab{position:fixed;bottom:22px;right:22px;z-index:50;background:var(--green);color:#07080F;font-weight:700;border-radius:99px;padding:13px 18px;display:flex;align-items:center;gap:9px;box-shadow:0 6px 24px rgba(37,211,102,.35);transition:transform .2s,box-shadow .2s;text-decoration:none;font-size:13px;font-family:inherit;cursor:pointer;border:none}
+.fab:hover{transform:scale(1.05);box-shadow:0 8px 30px rgba(37,211,102,.45)}
+
+/* ANN BAR */
+.ann{background:var(--bg2);border-bottom:1px solid var(--br);padding:7px 16px;font-size:11px;color:var(--t2);text-align:center}
+
+/* ====== BOOKING MODAL ====== */
+#booking-overlay{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:flex-end;justify-content:center}
+#booking-overlay.open{opacity:1;pointer-events:all}
+.modal-sheet{width:100%;max-width:560px;background:var(--bg2);border:1px solid var(--br2);border-bottom:none;border-radius:24px 24px 0 0;max-height:93vh;overflow-y:auto;transform:translateY(100%);transition:transform .46s cubic-bezier(.16,1,.3,1)}
+#booking-overlay.open .modal-sheet{transform:translateY(0)}
+.drag-h{width:36px;height:4px;background:var(--br2);border-radius:2px;margin:16px auto 0}
+.modal-inner{padding:18px 24px 32px}
+
+/* STEP PROGRESS */
+.steps-bar{display:flex;gap:5px;margin-bottom:22px}
+.step-seg{height:3px;border-radius:2px;flex:1;background:var(--br);transition:background .4s}
+.step-seg.done{background:var(--blue)}
+.step-seg.active{background:linear-gradient(90deg,var(--blue),var(--indigo))}
+
+/* STEP PANELS */
+.step-panel{display:none}
+.step-panel.active{display:block;animation:sin .32s cubic-bezier(.4,0,.2,1) both}
+@keyframes sin{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:translateX(0)}}
+.step-panel.going-back{animation:sback .32s cubic-bezier(.4,0,.2,1) both}
+@keyframes sback{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:translateX(0)}}
+.f-label{display:block;font-size:11px;font-weight:700;color:var(--t2);margin-bottom:6px;letter-spacing:.04em}
+.step-err{color:#ff6b6b;font-size:12px;margin-top:8px;display:none}
+
+/* MOBILE NAV */
+#mob-nav{background:var(--bg2);border-bottom:1px solid var(--br);padding:14px 18px}
+
+@media(max-width:640px){.contact-glow{padding:28px 20px}}
+@media(max-width:768px){.md-text-right{text-align:left}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+</style>
+</head>
+<body>
+
+<!-- ===== FAB ===== -->
+<button class="fab" onclick="wa('Floating Button')" aria-label="Chat on WhatsApp">
+  <svg style="width:20px;height:20px;fill:#07080F;flex-shrink:0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+  <span class="hidden sm:inline">WhatsApp Support</span>
+</button>
+
+<!-- ===== ANNOUNCEMENT ===== -->
+<div class="ann">
+  <span style="display:inline-flex;align-items:center;gap:8px">
+    <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(37,211,102,.1);color:#1aad4f;border:1px solid rgba(37,211,102,.22);border-radius:99px;padding:2px 9px;font-size:10px;font-weight:700;letter-spacing:.04em">
+      <span style="width:5px;height:5px;border-radius:50%;background:#1aad4f;display:inline-block;animation:bdot 2s ease-in-out infinite"></span>INDEPENDENT
+    </span>
+    Remote help across India · Local visits in Chhatrapati Sambhajinagar
+  </span>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="hdr sticky top-0 z-40" style="padding-top:env(safe-area-inset-top,0)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style="height:68px;display:flex;align-items:center;justify-content:space-between">
+    <a href="#top" style="display:flex;align-items:center;gap:12px;text-decoration:none">
+      <div style="width:40px;height:40px;background:linear-gradient(135deg,var(--blue),var(--indigo));border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg style="width:22px;height:22px" fill="none" stroke="#EEF0FF" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/></svg>
+      </div>
+      <div>
+        <div style="font-size:19px;font-weight:800;color:var(--t1)">WiFi<span style="color:var(--blue)">Care</span></div>
+        <div style="font-size:9px;color:var(--t3);letter-spacing:.06em;font-weight:500;margin-top:1px">Wi-Fi help, without the jargon</div>
+      </div>
+    </a>
+    <nav class="hidden md:flex items-center gap-6" style="font-size:12px;font-weight:600;color:var(--t2)">
+      <a href="#quick-tool" style="color:var(--blue);text-decoration:none">Quick Diagnostic</a>
+      <a href="#scope" class="nav-lk">Scope</a>
+      <a href="#services" class="nav-lk">Services</a>
+      <a href="#pricing" class="nav-lk">Pricing</a>
+      <a href="#faq" class="nav-lk">FAQ</a>
+    </nav>
+    <div class="hidden sm:block">
+      <button onclick="wa('Header')" class="btn btn-green" style="font-size:12px;padding:9px 16px;border-radius:10px">
+        <svg style="width:16px;height:16px;fill:#07080F;flex-shrink:0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        Chat on WhatsApp
+      </button>
+    </div>
+    <button onclick="toggleMob()" id="mob-btn" style="background:var(--card);border:1px solid var(--br);border-radius:10px;padding:8px;cursor:pointer;display:none" class="md:hidden">
+      <svg id="ham" style="width:20px;height:20px;display:block" fill="none" stroke="var(--t1)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg id="ham-x" style="width:20px;height:20px;display:none" fill="none" stroke="var(--t1)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div id="mob-nav" style="display:none;padding:14px 18px;background:var(--bg2);border-bottom:1px solid var(--br)">
+    <a href="#quick-tool" onclick="closeMob()" style="display:block;padding:11px 0;color:var(--blue);font-weight:600;font-size:14px;text-decoration:none;border-bottom:1px solid var(--br)">Quick Diagnostic</a>
+    <a href="#scope" onclick="closeMob()" style="display:block;padding:11px 0;color:var(--t2);font-weight:500;font-size:14px;text-decoration:none;border-bottom:1px solid var(--br)">Scope</a>
+    <a href="#services" onclick="closeMob()" style="display:block;padding:11px 0;color:var(--t2);font-weight:500;font-size:14px;text-decoration:none;border-bottom:1px solid var(--br)">Services</a>
+    <a href="#pricing" onclick="closeMob()" style="display:block;padding:11px 0;color:var(--t2);font-weight:500;font-size:14px;text-decoration:none;border-bottom:1px solid var(--br)">Pricing</a>
+    <a href="#faq" onclick="closeMob()" style="display:block;padding:11px 0;color:var(--t2);font-weight:500;font-size:14px;text-decoration:none;border-bottom:1px solid var(--br)">FAQ</a>
+    <div style="padding-top:14px">
+      <button onclick="wa('Mobile Nav');closeMob()" class="btn btn-green" style="width:100%;justify-content:center">Chat on WhatsApp</button>
+    </div>
+  </div>
+</header>
+<style>.nav-lk{color:var(--t2);text-decoration:none;transition:color .15s}.nav-lk:hover{color:var(--blue)}
+@media(max-width:767px){#mob-btn{display:flex!important}}</style>
+
+<!-- ===== HERO (Animation 1: Network Canvas) ===== -->
+<section id="top" class="hero-bg" style="padding:56px 0 80px">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style="position:relative;z-index:1">
+    <div class="grid lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7" style="display:flex;flex-direction:column;gap:22px">
+        <div class="badge"><span class="badge-dot"></span> Local Wi-Fi Support · Chhatrapati Sambhajinagar</div>
+        <h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.12;color:var(--t1)">
+          Wi-Fi acting up?<br>
+          <span class="hl">Let's work out why.</span>
+        </h1>
+        <p style="font-size:16px;line-height:1.72;color:var(--t2);max-width:520px">Router setup, slow Wi-Fi, dropped connections, "connected but no internet" — we help you sort it out. Remote help anywhere in India. Price agreed before any paid work begins.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <button onclick="wa('Hero')" class="btn btn-green btn-xl">
+            <svg style="width:20px;height:20px;fill:#07080F;flex-shrink:0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            Chat on WhatsApp
+          </button>
+          <a href="#quick-tool" class="btn btn-ghost btn-xl">
+            Tell us what's wrong
+            <svg style="width:16px;height:16px" fill="none" stroke="var(--t2)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </a>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:18px;font-size:12px;color:var(--t3)">
+          <span style="display:flex;align-items:center;gap:6px"><svg style="width:15px;height:15px" fill="none" stroke="#25D366" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Price agreed before work starts</span>
+          <span style="display:flex;align-items:center;gap:6px"><svg style="width:15px;height:15px" fill="none" stroke="#25D366" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Works with many common routers</span>
+        </div>
+      </div>
+      <div class="lg:col-span-5">
+        <div class="card" style="padding:28px">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:20px">
+            <div><div style="font-weight:700;color:var(--t1);font-size:15px">Simple, honest support.</div><div style="font-size:13px;color:var(--t2);margin-top:3px">No tech talk. No guessing games.</div></div>
+            <div class="sbars" aria-label="Wi-Fi signal indicator" role="img"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <h2 style="font-size:19px;font-weight:800;color:var(--t1);margin-bottom:20px">Here's how we help</h2>
+          <ol style="list-style:none;display:flex;flex-direction:column;gap:18px">
+            <li style="display:flex;gap:14px;align-items:flex-start">
+              <span style="width:30px;height:30px;border-radius:50%;background:rgba(77,136,255,.12);border:1px solid rgba(77,136,255,.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--blue);flex-shrink:0">1</span>
+              <div><div style="font-weight:600;color:var(--t1);font-size:14px">Tell us what's happening</div><div style="font-size:13px;color:var(--t2);margin-top:3px;line-height:1.65">A few details or a photo of your router lights helps us understand the problem.</div></div>
+            </li>
+            <li style="display:flex;gap:14px;align-items:flex-start">
+              <span style="width:30px;height:30px;border-radius:50%;background:rgba(77,136,255,.12);border:1px solid rgba(77,136,255,.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--blue);flex-shrink:0">2</span>
+              <div><div style="font-weight:600;color:var(--t1);font-size:14px">We explain the next step</div><div style="font-size:13px;color:var(--t2);margin-top:3px;line-height:1.65">We tell you what we can try remotely and what may need your internet provider.</div></div>
+            </li>
+            <li style="display:flex;gap:14px;align-items:flex-start">
+              <span style="width:30px;height:30px;border-radius:50%;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--amber);flex-shrink:0">3</span>
+              <div><div style="font-weight:600;color:var(--t1);font-size:14px">You approve the price first</div><div style="font-size:13px;color:var(--t2);margin-top:3px;line-height:1.65">No paid work starts until you understand the cost and agree to it.</div></div>
+            </li>
+          </ol>
+          <div style="margin-top:20px;border-top:1px solid var(--br);padding-top:14px;font-size:11px;color:var(--t3)">This website doesn't scan your router automatically. A real person discusses the issue with you.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROMISES ===== -->
+<section style="background:var(--bg2);border-top:1px solid var(--br);border-bottom:1px solid var(--br);padding:22px 0">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <div class="promise"><div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:6px">Remote-first</div><div style="font-weight:700;color:var(--t1);font-size:13px">From anywhere in India</div><div style="font-size:12px;color:var(--t2);margin-top:4px;line-height:1.5">You don't need to be local for remote help.</div></div>
+    <div class="promise"><div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:6px">Plain language</div><div style="font-weight:700;color:var(--t1);font-size:13px">No confusing tech talk</div><div style="font-size:12px;color:var(--t2);margin-top:4px;line-height:1.5">We explain the problem in simple words.</div></div>
+    <div class="promise"><div style="font-size:11px;font-weight:700;color:var(--amber);margin-bottom:6px">Your choice</div><div style="font-weight:700;color:var(--t1);font-size:13px">Price before paid work</div><div style="font-size:12px;color:var(--t2);margin-top:4px;line-height:1.5">You decide after we explain the cost.</div></div>
+    <div class="promise"><div style="font-size:11px;font-weight:700;color:var(--amber);margin-bottom:6px">No false claims</div><div style="font-weight:700;color:var(--t1);font-size:13px">We'll say when we can't help</div><div style="font-size:12px;color:var(--t2);margin-top:4px;line-height:1.5">Some faults must be handled by your ISP.</div></div>
+  </div>
+</section>
+
+<!-- ===== QUICK TOOL ===== -->
+<section id="quick-tool" style="background:var(--bg);padding:72px 0;border-bottom:1px solid var(--br)">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="rv" style="text-align:center;margin-bottom:36px">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px;letter-spacing:.05em">Quick message builder</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--t1)">Tell us what's wrong</h2>
+      <p style="font-size:14px;color:var(--t2);margin-top:8px">Pick the closest match — we'll put the details into a WhatsApp message for you.</p>
+    </div>
+    <div class="rv" style="background:var(--card);border:1px solid var(--br2);border-radius:20px;padding:28px">
+      <div class="grid md:grid-cols-3 gap-5" style="margin-bottom:22px">
+        <div>
+          <label class="f-label" for="t-issue">What's the problem?</label>
+          <select id="t-issue" class="field">
+            <option value="Router warning light / no internet">Router warning light / no internet</option>
+            <option value="Slow speed in bedrooms / dead zones">Slow speed in bedrooms / dead zones</option>
+            <option value="Wi-Fi disconnects frequently">Wi-Fi disconnects frequently</option>
+            <option value="New router setup & password reset">New router setup &amp; password reset</option>
+            <option value="Connected but no internet access">Connected but no internet access</option>
+          </select>
+        </div>
+        <div>
+          <label class="f-label" for="t-provider">Router / Provider</label>
+          <select id="t-provider" class="field">
+            <option value="TP-Link / D-Link router">TP-Link / D-Link router</option>
+            <option value="JioFiber router">JioFiber router</option>
+            <option value="Airtel Xstream Fiber">Airtel Xstream Fiber</option>
+            <option value="BSNL FTTH / Local ISP">BSNL FTTH / Local ISP</option>
+            <option value="Netgear / Syrotech / other">Netgear / Syrotech / other</option>
+          </select>
+        </div>
+        <div>
+          <label class="f-label" for="t-loc">Your city or area</label>
+          <input id="t-loc" type="text" maxlength="100" placeholder="e.g. Mumbai, Pune, Aurangabad" class="field">
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--br);padding-top:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+        <p style="font-size:12px;color:var(--t3)">Prepares a message — does not test your connection automatically.</p>
+        <button onclick="toolWA()" class="btn btn-green">
+          <svg style="width:16px;height:16px;fill:#07080F;flex-shrink:0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          Continue on WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SCOPE ===== -->
+<section id="scope" style="background:var(--bg2);padding:72px 0;border-bottom:1px solid var(--br)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="rv" style="text-align:center;margin-bottom:48px">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px">Honest Service Scope</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--t1)">What we do vs. what we don't</h2>
+      <p style="font-size:14px;color:var(--t2);margin-top:8px">Remote help is available across India. In-person visits are only offered locally, when available.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="scope-do rv">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.28);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">✓</div>
+          <div><div style="font-weight:800;color:var(--t1);font-size:17px">What We Do</div><div style="font-size:11px;color:#1aad4f;font-weight:600;margin-top:2px">Router help, done by hand</div></div>
+        </div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:16px">
+          <li style="display:flex;gap:12px"><svg style="width:18px;height:18px;color:#25D366;flex-shrink:0;margin-top:2px" fill="none" stroke="#25D366" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span style="font-size:14px;color:var(--t2);line-height:1.65"><strong style="color:var(--t1)">Router setup:</strong> Help setting up a router, Wi-Fi names and passwords, and 2.4GHz / 5GHz options.</span></li>
+          <li style="display:flex;gap:12px"><svg style="width:18px;height:18px;flex-shrink:0;margin-top:2px" fill="none" stroke="#25D366" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span style="font-size:14px;color:var(--t2);line-height:1.65"><strong style="color:var(--t1)">Slow Wi-Fi:</strong> Simple checks, router placement tips, and advice for Wi-Fi weak spots.</span></li>
+          <li style="display:flex;gap:12px"><svg style="width:18px;height:18px;flex-shrink:0;margin-top:2px" fill="none" stroke="#25D366" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span style="font-size:14px;color:var(--t2);line-height:1.65"><strong style="color:var(--t1)">Connection drops:</strong> We help check whether the issue is your router settings or your ISP.</span></li>
+          <li style="display:flex;gap:12px"><svg style="width:18px;height:18px;flex-shrink:0;margin-top:2px" fill="none" stroke="#25D366" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span style="font-size:14px;color:var(--t2);line-height:1.65"><strong style="color:var(--t1)">Price first:</strong> We explain the work and agree on price before charging you.</span></li>
+        </ul>
+      </div>
+      <div class="scope-dont rv">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(139,149,192,.07);border:1px solid var(--br2);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--t3);flex-shrink:0">✕</div>
+          <div><div style="font-weight:800;color:var(--t1);font-size:17px">What We Don't Do</div><div style="font-size:11px;color:var(--t3);font-weight:600;margin-top:2px">And we'll tell you upfront</div></div>
+        </div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:16px">
+          <li style="display:flex;gap:12px"><svg style="width:18px;height:18px;flex-shrink:0;margin-top:2px" fill="none" stroke="var(--t3)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg><span style="font-size:14px;color:var(--t2);line-height:1.65"><strong style="color:var(--t1)">Damaged outside fibre cables:</strong> We cannot repair street fibre cables. Your ISP needs to send its cable team.</span></li>
+          <li style="display:flex;gap:12px"><svg style="width:18px;height:18px;flex-shrink:0;margin-top:2px" fill="none" stroke="var(--t3)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg><span style="font-size:14px;color:var(--t2);line-height:1.65"><strong style="color:var(--t1)">No fake speed promises:</strong> We can't guarantee speeds beyond your internet plan.</span></li>
+          <li style="display:flex;gap:12px"><svg style="width:18px;height:18px;flex-shrink:0;margin-top:2px" fill="none" stroke="var(--t3)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg><span style="font-size:14px;color:var(--t2);line-height:1.65"><strong style="color:var(--t1)">Private passwords:</strong> We don't need banking OTPs or payment passwords. Never send those.</span></li>
+          <li style="display:flex;gap:12px"><svg style="width:18px;height:18px;flex-shrink:0;margin-top:2px" fill="none" stroke="var(--t3)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg><span style="font-size:14px;color:var(--t2);line-height:1.65"><strong style="color:var(--t1)">No surprise charges:</strong> We tell you the price first. If the job changes, we check with you before continuing.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services" style="background:var(--bg);padding:72px 0;border-bottom:1px solid var(--br)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="rv" style="text-align:center;margin-bottom:48px">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px">What We Fix</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--t1)">Services</h2>
+      <p style="font-size:14px;color:var(--t2);margin-top:8px">These are the three things people call us about most.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card rv" style="padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="width:46px;height:46px;border-radius:12px;background:rgba(77,136,255,.1);border:1px solid rgba(77,136,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px">📶</div>
+          <h3 style="font-size:17px;font-weight:700;color:var(--t1);margin-bottom:10px">Slow Speed &amp; Range Check</h3>
+          <p style="font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:18px">We check if nearby routers are crowding your channel, where your signal cuts out, and whether switching between 2.4GHz and 5GHz makes any real difference.</p>
+        </div>
+        <button onclick="wa('Service: Slow Speed')" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--blue);background:none;border:none;cursor:pointer;font-family:inherit;padding:0">Get Speed Diagnosis <svg style="width:14px;height:14px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="card rv" style="padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="width:46px;height:46px;border-radius:12px;background:rgba(123,110,240,.1);border:1px solid rgba(123,110,240,.2);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px">⚙️</div>
+          <h3 style="font-size:17px;font-weight:700;color:var(--t1);margin-bottom:10px">Router Configuration</h3>
+          <p style="font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:18px">New router still in the box? We get the password set, name the network, and reconnect your devices. Guest network too if you need it.</p>
+        </div>
+        <button onclick="wa('Service: Router Config')" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--indigo);background:none;border:none;cursor:pointer;font-family:inherit;padding:0">Book Setup Assistance <svg style="width:14px;height:14px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="card rv" style="padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="width:46px;height:46px;border-radius:12px;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.2);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px">🔴</div>
+          <h3 style="font-size:17px;font-weight:700;color:var(--t1);margin-bottom:10px">Connection Drops &amp; No Internet</h3>
+          <p style="font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:18px">Red light on the router. Keeps dropping every few hours. We check whether it's a settings problem we can fix — or a line fault your ISP needs to look at.</p>
+        </div>
+        <button onclick="wa('Service: Connection Drops')" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--amber);background:none;border:none;cursor:pointer;font-family:inherit;padding:0">Troubleshoot Drops <svg style="width:14px;height:14px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHAT TO EXPECT ===== -->
+<section id="comparison" style="background:var(--bg2);padding:72px 0;border-bottom:1px solid var(--br)">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="rv" style="text-align:center;margin-bottom:40px">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px">Before you message us</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--t1)">How it actually works</h2>
+      <p style="font-size:14px;color:var(--t2);margin-top:8px">So nothing catches you off guard once the conversation starts.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="card rv" style="padding:22px"><h3 style="font-weight:700;color:var(--t1);margin-bottom:7px;font-size:14px">Clear pricing first</h3><p style="font-size:13px;color:var(--t2);line-height:1.65">Starting prices are listed on this page. The exact scope and final price are confirmed with you before any paid work begins.</p></div>
+      <div class="card rv" style="padding:22px"><h3 style="font-weight:700;color:var(--t1);margin-bottom:7px;font-size:14px">Plain explanations</h3><p style="font-size:13px;color:var(--t2);line-height:1.65">Tell us what's wrong in plain terms. We'll say what we can try remotely and what you may need to sort out directly with your ISP.</p></div>
+      <div class="card rv" style="padding:22px"><h3 style="font-weight:700;color:var(--t1);margin-bottom:7px;font-size:14px">Where we can't help</h3><p style="font-size:13px;color:var(--t2);line-height:1.65">A broken fibre cable on the street? Your ISP handles that — not us. We don't promise fixes for things outside our reach.</p></div>
+      <div class="card rv" style="padding:22px"><h3 style="font-weight:700;color:var(--t1);margin-bottom:7px;font-size:14px">Just message us</h3><p style="font-size:13px;color:var(--t2);line-height:1.65">WhatsApp is the fastest way to reach us. Describe the problem and we'll tell you whether we can help.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section style="background:var(--bg);padding:72px 0;border-bottom:1px solid var(--br)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="rv" style="text-align:center;margin-bottom:48px">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px">The short version</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--t1)">3 steps and you're talking to a real person</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card rv" style="padding:24px">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(77,136,255,.1);border:1px solid rgba(77,136,255,.2);border-radius:8px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.07em;margin-bottom:16px">STEP 01</div>
+        <h3 style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:8px">Message on WhatsApp</h3>
+        <p style="font-size:13px;color:var(--t2);line-height:1.7">Message us on WhatsApp to describe your Wi-Fi trouble in your own words.</p>
+      </div>
+      <div class="card rv" style="padding:24px">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(123,110,240,.1);border:1px solid rgba(123,110,240,.2);border-radius:8px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--indigo);letter-spacing:.07em;margin-bottom:16px">STEP 02</div>
+        <h3 style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:8px">We work out what's going on</h3>
+        <p style="font-size:13px;color:var(--t2);line-height:1.7">We look at what you've sent and tell you what's likely wrong — and whether we can sort it remotely or not.</p>
+      </div>
+      <div class="card rv" style="padding:24px">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--amber);letter-spacing:.07em;margin-bottom:16px">STEP 03</div>
+        <h3 style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:8px">Agree on a price, then sort it</h3>
+        <p style="font-size:13px;color:var(--t2);line-height:1.7">You see the price before anything starts. Then we walk you through the fix, one step at a time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing" style="background:var(--bg2);padding:72px 0;border-bottom:1px solid var(--br)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="rv" style="text-align:center;margin-bottom:48px">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px">Pricing</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--t1)">What each package covers</h2>
+      <p style="font-size:14px;color:var(--t2);margin-top:8px">No surprises. You know what you're paying before we start.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="rv" style="background:var(--card);border:1px solid var(--br);border-radius:20px;padding:26px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--t3);letter-spacing:.06em;margin-bottom:6px">BASIC CHECK</div>
+          <h3 style="font-size:18px;font-weight:700;color:var(--t1);margin-bottom:4px">Basic Troubleshooting</h3>
+          <div style="font-size:32px;font-weight:800;color:var(--blue);margin-bottom:6px">₹249 <span style="font-size:12px;font-weight:400;color:var(--t3)">starting</span></div>
+          <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Remote Wi-Fi troubleshooting, up to 20 minutes.</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:24px">
+            <li style="font-size:12px;color:var(--t2);display:flex;gap:8px;align-items:center"><span style="color:var(--green)">✓</span> Initial connectivity review</li>
+            <li style="font-size:12px;color:var(--t2);display:flex;gap:8px;align-items:center"><span style="color:var(--green)">✓</span> Router indicator light review</li>
+            <li style="font-size:12px;color:var(--t2);display:flex;gap:8px;align-items:center"><span style="color:var(--green)">✓</span> Basic guidance &amp; password check</li>
+            <li style="font-size:12px;color:var(--t3);display:flex;gap:8px;align-items:center"><span>✕</span> Hardware replacement excluded</li>
+          </ul>
+        </div>
+        <button onclick="openBooking('Basic Troubleshooting','₹249')" class="btn btn-dark" style="width:100%;justify-content:center;font-size:12px">Book Basic (₹249)</button>
+      </div>
+
+      <div class="card-featured rv" style="padding:26px;display:flex;flex-direction:column;justify-content:space-between;position:relative">
+        <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--blue);color:#07080F;font-size:10px;font-weight:700;padding:4px 14px;border-radius:99px;letter-spacing:.04em;white-space:nowrap">MOST POPULAR</div>
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.06em;margin-bottom:6px">STANDARD SETUP</div>
+          <h3 style="font-size:18px;font-weight:700;color:var(--t1);margin-bottom:4px">Router Configuration</h3>
+          <div style="font-size:32px;font-weight:800;color:var(--t1);margin-bottom:6px">₹499 <span style="font-size:12px;font-weight:400;color:var(--t3)">starting</span></div>
+          <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Basic setup or configuration for one router.</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:24px">
+            <li style="font-size:12px;color:var(--t2);display:flex;gap:8px;align-items:center"><span style="color:var(--green)">✓</span> Wi-Fi name (SSID) &amp; password setup</li>
+            <li style="font-size:12px;color:var(--t2);display:flex;gap:8px;align-items:center"><span style="color:var(--green)">✓</span> Basic wireless security settings</li>
+            <li style="font-size:12px;color:var(--t2);display:flex;gap:8px;align-items:center"><span style="color:var(--green)">✓</span> Reconnecting devices (phones, TVs, laptops)</li>
+            <li style="font-size:12px;color:var(--t3);display:flex;gap:8px;align-items:center"><span>✕</span> Does not cover advanced enterprise routers</li>
+          </ul>
+        </div>
+        <button onclick="openBooking('Router Configuration','₹499')" class="btn btn-blue" style="width:100%;justify-content:center;font-size:12px">Book Standard (₹499)</button>
+      </div>
+
+      <div class="rv" style="background:var(--card);border:1px solid var(--br);border-radius:20px;padding:26px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--t3);letter-spacing:.06em;margin-bottom:6px">ADVANCED / ON-SITE</div>
+          <h3 style="font-size:18px;font-weight:700;color:var(--t1);margin-bottom:4px">Advanced Issues &amp; Visit</h3>
+          <div style="font-size:32px;font-weight:800;color:var(--t1);margin-bottom:6px">₹799 <span style="font-size:12px;font-weight:400;color:var(--t3)">starting</span></div>
+          <p style="font-size:12px;color:var(--t3);margin-bottom:16px">More involved troubleshooting or local visit.</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:24px">
+            <li style="font-size:12px;color:var(--t2);display:flex;gap:8px;align-items:center"><span style="color:var(--green)">✓</span> Multi-device troubleshooting</li>
+            <li style="font-size:12px;color:var(--t2);display:flex;gap:8px;align-items:center"><span style="color:var(--green)">✓</span> On-site diagnostic visit (local coverage)</li>
+            <li style="font-size:12px;color:var(--t2);display:flex;gap:8px;align-items:center"><span style="color:var(--green)">✓</span> Range extender &amp; dead-zone tuning</li>
+            <li style="font-size:12px;color:var(--t3);display:flex;gap:8px;align-items:center"><span>✕</span> ISP service charges excluded</li>
+          </ul>
+        </div>
+        <button onclick="openBooking('Advanced Issues / On-site Visit','₹799+')" class="btn btn-dark" style="width:100%;justify-content:center;font-size:12px">Request Advanced (₹799+)</button>
+      </div>
+
+    </div>
+    <div class="rv" style="margin-top:22px;background:var(--card);border:1px solid var(--br);border-radius:12px;padding:14px 18px;font-size:12px;color:var(--t3);text-align:center;max-width:780px;margin-left:auto;margin-right:auto">
+      <strong style="color:var(--t2)">Pricing note:</strong> The exact price is set once we understand the problem — before work begins. ISP outages, physical cable damage, and hardware failures can't be fixed remotely. On-site visits may carry a travel fee.
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" style="background:var(--bg);padding:72px 0;border-bottom:1px solid var(--br)">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="rv" style="text-align:center;margin-bottom:44px">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px">FAQ</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--t1)">Frequently Asked Questions</h2>
+    </div>
+    <div class="rv">
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Can you fix every Wi-Fi problem remotely?</span><svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button><div class="faq-body"><div class="faq-inner">No. Some things need your ISP's cable team or a hardware replacement. If we can't help remotely, we say so upfront — not after charging you.</div></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>How much does troubleshooting cost?</span><svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button><div class="faq-body"><div class="faq-inner">Starting prices are ₹249 for basic troubleshooting, ₹499 for router setup, and ₹799+ for advanced or on-site work. The exact amount is confirmed with you before anything gets started.</div></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>What if my internet provider is experiencing an outage?</span><svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button><div class="faq-body"><div class="faq-inner">We can run a few basic checks, but if your ISP is down, only they can bring the line back up. We'll tell you if that's what it looks like.</div></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Do I need to share my router password?</span><svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button><div class="faq-body"><div class="faq-inner">Only share what's needed for the task you've agreed to. Banking OTPs and payment passwords — never send those. Your Wi-Fi password: only if it's actually needed for a setup we've already discussed.</div></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Can you visit my home or office?</span><svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button><div class="faq-body"><div class="faq-inner">Remote help, yes — anywhere in India. Home visits are Chhatrapati Sambhajinagar only, and only when we're free. Message us first.</div></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>How do I get started?</span><svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button><div class="faq-body"><div class="faq-inner">Just message us on WhatsApp, tell us what's wrong, and we'll take it from there. No sign-up, no app, nothing to install.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" style="background:var(--bg2);padding:72px 0">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 rv">
+    <div class="contact-glow">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(37,211,102,.08);color:#1aad4f;border:1px solid rgba(37,211,102,.22);border-radius:99px;padding:5px 13px;font-size:11px;font-weight:600;margin-bottom:18px">
+        <span style="width:6px;height:6px;border-radius:50%;background:#1aad4f;display:inline-block;animation:bdot 2s ease-in-out infinite"></span>Message us on WhatsApp
+      </div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;color:var(--t1)">Let's figure out your Wi-Fi problem.</h2>
+      <p style="font-size:14px;color:var(--t2);margin-top:10px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.72">Tell us what's going on. We'll explain what we can try, what we can't fix remotely, and the price before any paid work.</p>
+      <div style="margin-top:28px">
+        <button onclick="wa('Contact Section')" class="btn btn-green btn-xl">
+          <svg style="width:20px;height:20px;fill:#07080F;flex-shrink:0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          Chat on WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer style="background:var(--bg);border-top:1px solid var(--br);padding:44px 0">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-8 md:grid-cols-3">
+    <div>
+      <div style="font-size:18px;font-weight:800;color:var(--t1)">WiFi<span style="color:var(--blue)">Care</span></div>
+      <p style="font-size:13px;color:var(--t2);margin-top:8px;line-height:1.7">Wi-Fi and router help across India. If you're in Chhatrapati Sambhajinagar, on-site visits may be possible.</p>
+    </div>
+    <div>
+      <div style="font-weight:600;color:var(--t1);font-size:14px;margin-bottom:10px">Contact</div>
+      <button onclick="wa('Footer')" style="display:inline-flex;align-items:center;gap:7px;color:var(--green);font-weight:600;font-size:14px;background:none;border:none;cursor:pointer;font-family:inherit;padding:0;margin-bottom:8px">
+        <svg style="width:17px;height:17px;fill:var(--green);flex-shrink:0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        WhatsApp
+      </button>
+      <p style="font-size:13px;color:var(--t2)">Mobile: <a href="tel:+918793664463" style="color:var(--t1);font-weight:600;text-decoration:none">+91 87936 64463</a></p>
+      <p style="font-size:12px;color:var(--t3);margin-top:4px">Message first to confirm availability and pricing.</p>
+    </div>
+    <div>
+      <div style="font-weight:600;color:var(--t1);font-size:14px;margin-bottom:8px">Service information</div>
+      <p style="font-size:13px;color:var(--t2);line-height:1.65">Remote support anywhere in India. In-person visits are local only and depend on availability.</p>
+      <p style="font-size:11px;color:var(--t3);margin-top:16px">© <span id="yr">2026</span> WiFiCare. All rights reserved.</p>
+      <p style="font-size:11px;color:var(--t3);margin-top:2px">Independent service; not affiliated with internet providers.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== BOOKING MODAL (Animation 2: Slide-Up Drawer) ===== -->
+<div id="booking-overlay" role="dialog" aria-modal="true" aria-labelledby="bk-title" onclick="if(event.target===this)closeBooking()">
+  <div class="modal-sheet" id="booking-sheet">
+    <div class="drag-h"></div>
+    <div class="modal-inner">
+
+      <!-- Header row -->
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.06em;margin-bottom:4px">BOOKING ENQUIRY</div>
+          <h2 id="bk-title" style="font-size:21px;font-weight:800;color:var(--t1)">Request support</h2>
+          <p style="font-size:12px;color:var(--t2);margin-top:4px">Fill this in, then WhatsApp opens with the message ready. You read it and press send.</p>
+        </div>
+        <button onclick="closeBooking()" style="background:var(--lift);border:1px solid var(--br);border-radius:10px;width:36px;height:36px;cursor:pointer;flex-shrink:0;color:var(--t2);font-size:17px;display:flex;align-items:center;justify-content:center" aria-label="Close">✕</button>
+      </div>
+
+      <!-- Service pill -->
+      <div id="bk-pill" style="background:rgba(77,136,255,.07);border:1px solid rgba(77,136,255,.18);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--t1);margin-bottom:16px;font-weight:600"></div>
+
+      <!-- Progress bar -->
+      <div class="steps-bar">
+        <div class="step-seg" id="seg1"></div>
+        <div class="step-seg" id="seg2"></div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-panel" id="bk-step1">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.07em;color:var(--blue);margin-bottom:14px">YOUR CONTACT DETAILS</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <label class="f-label" for="b-name">Your name</label>
+            <input id="b-name" type="text" class="field" placeholder="Enter your name" maxlength="80" autocomplete="name">
+          </div>
+          <div>
+            <label class="f-label" for="b-phone">Mobile number</label>
+            <input id="b-phone" type="tel" inputmode="tel" class="field" placeholder="Number we can reach you on" pattern="[0-9+() -]{8,20}" maxlength="20" autocomplete="tel" aria-describedby="err1">
+          </div>
+          <div>
+            <label class="f-label" for="b-loc">Area / locality</label>
+            <input id="b-loc" type="text" class="field" placeholder="e.g. Osmanpura, Cidco, Mumbai" maxlength="100" autocomplete="address-level3">
+          </div>
+        </div>
+        <div id="err1" class="step-err">Please fill in all three fields above to continue.</div>
+        <button onclick="goStep2()" class="btn btn-amber" style="width:100%;justify-content:center;margin-top:18px;padding:14px 22px">
+          Next — Describe the issue
+          <svg style="width:16px;height:16px" fill="none" stroke="#07080F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-panel" id="bk-step2">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.07em;color:var(--blue);margin-bottom:14px">DESCRIBE THE PROBLEM</div>
+        <div>
+          <label class="f-label" for="b-issue">What's happening with your Wi-Fi?</label>
+          <textarea id="b-issue" class="field" rows="4" maxlength="500" placeholder="Describe the issue in your own words — lights blinking, speed slow, no connection, etc."></textarea>
+        </div>
+        <p style="font-size:11px;color:var(--t3);margin-top:8px;line-height:1.6">Your details are not saved by this website. Tapping the button below opens WhatsApp. Check the message and tap Send yourself. Price is confirmed before any paid work begins.</p>
+        <div id="err2" class="step-err">Please describe your issue before continuing.</div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <button onclick="goStep1()" class="btn btn-ghost" style="padding:13px 16px;border-radius:12px">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <button onclick="sendWA()" class="btn btn-green" style="flex:1;justify-content:center;padding:13px">
+            <svg style="width:16px;height:16px;fill:#07080F;flex-shrink:0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            Send on WhatsApp
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== JS ===== -->
+<script>
+const WAN = "918793664463";
+function waUrl(t){ return `https://wa.me/${WAN}?text=${encodeURIComponent(t)}`; }
+function waOpen(url){ window.open(url,'_blank','noopener,noreferrer'); }
+function wa(src){ waOpen(waUrl(`Hi, I found your WiFiCare website. I need help with a Wi-Fi or router problem. [${src}] Please explain the scope and price before any paid work begins.`)); }
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// --- MOBILE NAV ---
+function toggleMob(){
+  const m=document.getElementById('mob-nav');
+  const h=document.getElementById('ham');
+  const hx=document.getElementById('ham-x');
+  const open=m.style.display==='block';
+  m.style.display=open?'none':'block';
+  h.style.display=open?'block':'none';
+  hx.style.display=open?'none':'block';
+}
+function closeMob(){
+  document.getElementById('mob-nav').style.display='none';
+  document.getElementById('ham').style.display='block';
+  document.getElementById('ham-x').style.display='none';
+}
+
+// --- QUICK TOOL ---
+function toolWA(){
+  const issue=document.getElementById('t-issue').value;
+  const prov=document.getElementById('t-provider').value;
+  const loc=document.getElementById('t-loc').value.trim()||'not specified';
+  waOpen(waUrl(`Hi, I found your WiFiCare website. I need help with a Wi-Fi or router problem.\n\n• Problem: ${issue}\n• Provider/Router: ${prov}\n• Location: ${loc}\n\nPlease guide me on next steps and confirm the price before any paid work.`));
+}
+
+// --- FAQ (smooth accordion) ---
+function toggleFaq(btn){
+  const body=btn.nextElementSibling;
+  const icon=btn.querySelector('.faq-icon');
+  const isOpen=!!body.style.maxHeight&&body.style.maxHeight!=='0px';
+  document.querySelectorAll('.faq-body').forEach(b=>b.style.maxHeight='0');
+  document.querySelectorAll('.faq-icon').forEach(i=>i.classList.remove('open'));
+  if(!isOpen){ body.style.maxHeight=body.scrollHeight+'px'; icon.classList.add('open'); }
+}
+
+// --- BOOKING MODAL ---
+let bkSvc='', bkPrice='', bkStep=1;
+
+function openBooking(svc,price){
+  bkSvc=svc; bkPrice=price;
+  document.getElementById('bk-pill').textContent=`${svc} — ${price}`;
+  bkStep=1; showBkStep(1,false);
+  document.getElementById('booking-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('b-name').focus(), 480);
+}
+function closeBooking(){
+  document.getElementById('booking-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function showBkStep(n,back){
+  document.querySelectorAll('.step-panel').forEach(p=>{
+    p.classList.remove('active','going-back');
+    p.style.display='none';
+  });
+  const p=document.getElementById('bk-step'+n);
+  p.style.display='block';
+  if(back) p.classList.add('going-back');
+  p.classList.add('active');
+  // progress bar
+  const segs=['seg1','seg2'];
+  segs.forEach((id,i)=>{
+    const s=document.getElementById(id);
+    s.className='step-seg';
+    if(i+1<n) s.classList.add('done');
+    else if(i+1===n) s.classList.add('active');
+  });
+  bkStep=n;
+}
+
+function goStep2(){
+  const n=document.getElementById('b-name').value.trim();
+  const p=document.getElementById('b-phone').value.trim();
+  const l=document.getElementById('b-loc').value.trim();
+  const e=document.getElementById('err1');
+  const phoneDigits=p.replace(/\D/g,'');
+  const phoneLooksValid =
+    (phoneDigits.length===10) ||
+    (phoneDigits.length===12 && phoneDigits.startsWith('91')) ||
+    (phoneDigits.length>=8 && phoneDigits.length<=15 && p.startsWith('+'));
+  if(!n||!p||!l){ e.textContent='Please fill in all three fields above to continue.'; e.style.display='block'; return; }
+  if(!phoneLooksValid){ e.textContent='Enter a valid phone number (10 digits for India, or include your country code).'; e.style.display='block'; document.getElementById('b-phone').focus(); return; }
+  e.style.display='none';
+  document.getElementById('err2').style.display='none';
+  showBkStep(2,false);
+}
+function goStep1(){
+  document.getElementById('err1').style.display='none';
+  showBkStep(1,true);
+}
+function sendWA(){
+  const issue=document.getElementById('b-issue').value.trim();
+  const e=document.getElementById('err2');
+  if(!issue){ e.style.display='block'; return; }
+  e.style.display='none';
+  const name=document.getElementById('b-name').value.trim();
+  const phone=document.getElementById('b-phone').value.trim();
+  const loc=document.getElementById('b-loc').value.trim();
+  const msg=`Hi, I found WiFiCare's website and would like to request support.\n\n• Service: ${bkSvc} — ${bkPrice}\n• Name: ${name}\n• Mobile: ${phone}\n• Area: ${loc}\n• Issue: ${issue}\n\nPlease confirm availability and the final price before any paid work begins.`;
+  waOpen(waUrl(msg));
+  closeBooking();
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('booking-overlay').classList.contains('open'))closeBooking(); });
+
+// --- SCROLL REVEAL ---
+const rvO=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); rvO.unobserve(e.target); } });
+},{threshold:.1,rootMargin:'0px 0px -36px 0px'});
+document.querySelectorAll('.rv').forEach(el=>rvO.observe(el));
+
+// ==============================================
+// ANIMATION 1: HERO NETWORK SIGNAL CANVAS
+// ==============================================
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  if(!canvas||!canvas.getContext)return;
+  const ctx=canvas.getContext('2d');
+  let W=0,H=0;
+  const N=24, DIST=145;
+  let nodes=[];
+
+  function resize(){
+    W=canvas.width=canvas.parentElement.offsetWidth||window.innerWidth;
+    H=canvas.height=canvas.parentElement.offsetHeight||520;
+    nodes=Array.from({length:N},()=>({
+      x:Math.random()*W, y:Math.random()*H,
+      vx:(Math.random()-.5)*.42, vy:(Math.random()-.5)*.42,
+      r:Math.random()*1.8+1.2,
+      ph:Math.random()*Math.PI*2
+    }));
+  }
+
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    nodes.forEach(n=>{
+      n.x+=n.vx; n.y+=n.vy; n.ph+=.016;
+      if(n.x<-10)n.x=W+10; if(n.x>W+10)n.x=-10;
+      if(n.y<-10)n.y=H+10; if(n.y>H+10)n.y=-10;
+    });
+    for(let i=0;i<N;i++){
+      for(let j=i+1;j<N;j++){
+        const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<DIST){
+          ctx.strokeStyle=`rgba(77,136,255,${(1-d/DIST)*.26})`;
+          ctx.lineWidth=.7;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x,nodes[i].y);
+          ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(n=>{
+      const pulse=1+Math.sin(n.ph)*.22;
+      ctx.fillStyle='rgba(77,136,255,.6)';
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r*pulse,0,Math.PI*2);
+      ctx.fill();
+    });
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  requestAnimationFrame(frame);
+  let resizeTimer;
+  window.addEventListener('resize',()=>{ clearTimeout(resizeTimer); resizeTimer=setTimeout(resize,120); });
+})();
+</script>
+</body>
+</html>
